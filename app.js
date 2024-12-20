@@ -32,7 +32,11 @@ app.use((requete, reponse, next) => { // Methode pour faire fonctionner les cors
 });
 
 // Middleware qui rend le dossier /public accessible sur la machine local
-app.use(express.static('public'));
+if (ENV.NODE_ENV === 'prod') {
+    app.use(express.static('/public'));
+} else {
+    app.use(express.static('public'));
+}
 
 // Middleware pour connecter les routes
 app.use("/api/user", userRouter);
