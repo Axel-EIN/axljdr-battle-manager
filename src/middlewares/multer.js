@@ -11,13 +11,21 @@ const storage = multer.diskStorage(
     {
         destination: (req, file, callback) => {
             const folderName =  file.fieldname + 's';
+
             console.log('Vérification et ou Creation du dossier public/');
             checkAndCreateDir('public/');
+
             console.log('Vérification et ou Creation du dossier public/images/');
             checkAndCreateDir('public/images/');
+
             console.log(`Vérification et ou Creation du dossier public/images/${folderName}/`);
-            checkAndCreateDir('public/images/' + folderName + '/'); // Crée le dossier de destination s'il n'existe pas encore
-            callback(null, "public/images/" + folderName + '/'); // Dossier de destination prêt 
+            checkAndCreateDir('public/images/' + folderName + '/');
+
+            if (ENV.NODE_ENV === 'prod') {
+                callback(null, "/public/images/" + folderName + '/');
+            } else {
+                callback(null, "public/images/" + folderName + '/');
+            }
         },
 
         filename: (req, file, callback) => {
