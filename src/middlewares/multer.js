@@ -1,5 +1,6 @@
 import multer from "multer";
 import { checkAndCreateDir } from "../utils/filemanager.js";
+import { ENV } from '../../config.js';
 
 const MIME_TYPES = { // association nom et extension de fichier d'images
     "image/jpg": "jpg",
